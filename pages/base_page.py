@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,6 +14,7 @@ class BasePage:
         self.driver.get(self.url)
 
     def element_is_visible(self, locator, timeout=5):
+        self.go_to_element(self.element_is_present(locator))
         return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
     def element_are_visible(self, locator, timeout=5):
@@ -41,3 +44,10 @@ class BasePage:
         action = ActionChains(self.driver)
         action.context_click(element)
         action.perform()
+
+    def remove_footer(self):
+        self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
+        ban1 = self.driver.find_element_by_xpath("//*[@id=\"close-fixedban\"]")
+        ban2 = self.driver.find_element_by_xpath('//*[@id="fixedban"]')
+        self.driver.execute_script("arguments[0].remove();arguments[1].remove();", ban1, ban2)
+
