@@ -51,3 +51,6 @@ class BasePage:
         ban2 = self.driver.find_element_by_xpath('//*[@id="fixedban"]')
         self.driver.execute_script("arguments[0].remove();arguments[1].remove();", ban1, ban2)
 
+    def check_opened_new_window_or_tab(self):
+        return self.driver.switch_to.window(self.driver.window_handles[1])
+
