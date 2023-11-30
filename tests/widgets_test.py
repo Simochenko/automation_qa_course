@@ -2,7 +2,8 @@ import time
 
 import allure
 
-from pages.widgets_page import AccordianPage, AutoCompletePage, DatePickerPage#, SliderPage, ProgressBarPage, TabsPage, \
+from pages.widgets_page import AccordianPage, AutoCompletePage, DatePickerPage, \
+    SliderPage, ProgressBarPage#, TabsPage, \
     #ToolTipsPage, MenuPage
 
 
@@ -64,24 +65,24 @@ class TestWidgets:
             value_date_before, value_date_after = date_picker_page.select_date_and_time()
             assert value_date_before != value_date_after, 'the date and time have not been changed'
 
-    # # @allure.feature('Slider Page')
-    # class TestSliderPage:
-    #     # @allure.title('Check moved slider')
-    #     def test_slider(self, driver):
-    #         slider = SliderPage(driver, 'https://demoqa.com/slider')
-    #         slider.open()
-    #         before, after = slider.change_slider_value()
-    #         assert before != after, 'the slider value has not been changed'
-    #
-    # # @allure.feature('Progress Bar Page')
-    # class TestProgressBarPage:
-    #     # @allure.title('Check changed progress bar')
-    #     def test_progress_bar(self, driver):
-    #         progress_bar = ProgressBarPage(driver, 'https://demoqa.com/progress-bar')
-    #         progress_bar.open()
-    #         before, after = progress_bar.change_progress_bar_value()
-    #         assert before != after, 'the progress bar value has not been changed'
-    #
+    # @allure.feature('Slider Page')
+    class TestSliderPage:
+        # @allure.title('Check moved slider')
+        def test_slider(self, driver):
+            slider = SliderPage(driver, 'https://demoqa.com/slider')
+            slider.open()
+            before, after = slider.change_slider_value()
+            assert before != after, 'the slider value has not been changed'
+
+    # @allure.feature('Progress Bar Page')
+    class TestProgressBarPage:
+        # @allure.title('Check changed progress bar')
+        def test_progress_bar(self, driver):
+            progress_bar = ProgressBarPage(driver, 'https://demoqa.com/progress-bar')
+            progress_bar.open()
+            before, after = progress_bar.change_progress_bar_value()
+            assert before != after, 'the progress bar value has not been changed'
+
     # # @allure.feature('Test Tabs Page')
     # class TestTabsPage:
     #     # @allure.title('Check switched tabs')
