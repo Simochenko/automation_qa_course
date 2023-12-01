@@ -202,14 +202,14 @@ class ToolTipsPage(BasePage):
         return tool_tip_text_button, tool_tip_text_field, tool_tip_text_contrary, tool_tip_text_section
 
 
-# class MenuPage(BasePage):
-#     locators = MenuPageLocators()
-#
-#     # @allure.step('check menu item')
-#     def check_menu(self):
-#         menu_item_list = self.elements_are_present(self.locators.MENU_ITEM_LIST)
-#         data = []
-#         for item in menu_item_list:
-#             self.action_move_to_element(item)
-#             data.append(item.text)
-#         return data
+class MenuPage(BasePage):
+    locators = MenuPageLocators()
+
+    # @allure.step('check menu item')
+    def check_menu(self):
+        menu_item_list = self.elements_are_present(self.locators.MENU_ITEM_LIST)
+        data = []
+        for item in menu_item_list:
+            self.action_move_to_element(item)
+            data.append(item.text)
+        return data
