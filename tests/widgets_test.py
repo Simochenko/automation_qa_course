@@ -3,8 +3,7 @@ import time
 import allure
 
 from pages.widgets_page import AccordianPage, AutoCompletePage, DatePickerPage, \
-    SliderPage, ProgressBarPage, TabsPage#, \
-    #ToolTipsPage, MenuPage
+    SliderPage, ProgressBarPage, TabsPage, ToolTipsPage#, MenuPage
 
 
 # @allure.suite('Widgets')
@@ -33,7 +32,7 @@ class TestWidgets:
             colors_result = autocomplete_page.check_color_in_multi()
             assert colors == colors_result, 'the added colors are missing in the input'
 
-    #     # @allure.title('Check deletions from the multi autocomplete')
+        #     # @allure.title('Check deletions from the multi autocomplete')
         def test_remove_value_from_multi(self, driver):
             autocomplete_page = AutoCompletePage(driver, 'https://demoqa.com/auto-complete')
             autocomplete_page.open()
@@ -41,7 +40,7 @@ class TestWidgets:
             count_value_before, count_value_after = autocomplete_page.remove_value_from_multi()
             assert count_value_before != count_value_after, "value was not deleted"
 
-    #     # @allure.title('Check deletions from the single autocomplete')
+        #     # @allure.title('Check deletions from the single autocomplete')
         def test_fill_single_autocomplete(self, driver):
             autocomplete_page = AutoCompletePage(driver, 'https://demoqa.com/auto-complete')
             autocomplete_page.open()
@@ -98,19 +97,19 @@ class TestWidgets:
             assert use_button == 'Use' and use_content != 0, 'the tab "use" was not pressed or the text is missing'
             assert more_button == 'More' and what_content != 0, 'the tab "more" was not pressed or the text is missing'
 
-    # # @allure.feature('Tool Tips')
-    # class TestToolTips:
-    #     # @allure.title('Check tool tips ')
-    #     def test_tool_tips(self, driver):
-    #         tool_tips_page = ToolTipsPage(driver, 'https://demoqa.com/tool-tips')
-    #         tool_tips_page.open()
-    #         button_text, field_text, contrary_text, section_text = tool_tips_page.check_tool_tips()
-    #         assert button_text == 'You hovered over the Button', 'hover missing or incorrect content'
-    #         assert field_text == 'You hovered over the text field', 'hover missing or incorrect content'
-    #         assert contrary_text == 'You hovered over the Contrary', 'hover missing or incorrect content'
-    #         assert section_text == 'You hovered over the 1.10.32', 'hover missing or incorrect content'
-    #
-    # # @allure.feature('Menu Page')
+    # @allure.feature('Tool Tips')
+    class TestToolTips:
+        # @allure.title('Check tool tips ')
+        def test_tool_tips(self, driver):
+            tool_tips_page = ToolTipsPage(driver, 'https://demoqa.com/tool-tips')
+            tool_tips_page.open()
+            button_text, field_text, contrary_text, section_text = tool_tips_page.check_tool_tips()
+            assert button_text == 'You hovered over the Button', 'hover missing or incorrect content'
+            assert field_text == 'You hovered over the text field', 'hover missing or incorrect content'
+            assert contrary_text == 'You hovered over the Contrary', 'hover missing or incorrect content'
+            assert section_text == 'You hovered over the 1.10.32', 'hover missing or incorrect content'
+
+    # @allure.feature('Menu Page')
     # class TestMenuPage:
     #     # @allure.title('Check all of the menu items')
     #     def test_menu_items(self, driver):

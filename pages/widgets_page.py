@@ -50,7 +50,7 @@ class AutoCompletePage(BasePage):
             input_multi.send_keys(Keys.ENTER)
         return colors
 
-#     # @allure.step('remove value from multi autocomplete')
+    #     # @allure.step('remove value from multi autocomplete')
     def remove_value_from_multi(self):
         count_value_before = len(self.elements_are_present(self.locators.MULTI_VALUE))
         remove_button_list = self.element_are_visible(self.locators.MULTI_VALUE_REMOVE)
@@ -60,7 +60,7 @@ class AutoCompletePage(BasePage):
         count_value_after = len(self.elements_are_present(self.locators.MULTI_VALUE))
         return count_value_before, count_value_after
 
-#     # @allure.step('check colors in multi autocomplete')
+    #     # @allure.step('check colors in multi autocomplete')
     def check_color_in_multi(self):
         color_list = self.elements_are_present(self.locators.MULTI_VALUE)
         colors = []
@@ -68,7 +68,7 @@ class AutoCompletePage(BasePage):
             colors.append(color.text)
         return colors
 
-#     # @allure.step('fill single autocomplete input')
+    #     # @allure.step('fill single autocomplete input')
     def fill_input_single(self):
         color = random.sample(next(generated_color()).color_name, k=1)
         input_single = self.element_is_clickable(self.locators.SINGLE_INPUT)
@@ -178,28 +178,30 @@ class TabsPage(BasePage):
         return button.text, len(what_content)
 
 
-# class ToolTipsPage(BasePage):
-#     locators = ToolTipsPageLocators()
-#
-#     # @allure.step('get text from tool tip')
-#     def get_text_from_tool_tips(self, hover_elem, wait_elem):
-#         element = self.element_is_present(hover_elem)
-#         self.action_move_to_element(element)
-#         self.element_is_visible(wait_elem)
-#         tool_tip_text = self.element_is_visible(self.locators.TOOL_TIPS_INNERS)
-#         text = tool_tip_text.text
-#         return text
-#
-#     # @allure.step('check tool tip')
-#     def check_tool_tips(self):
-#         tool_tip_text_button = self.get_text_from_tool_tips(self.locators.BUTTON, self.locators.TOOL_TIP_BUTTON)
-#         tool_tip_text_field = self.get_text_from_tool_tips(self.locators.FIELD, self.locators.TOOL_TIP_FIELD)
-#         tool_tip_text_contrary = self.get_text_from_tool_tips(self.locators.CONTRARY_LINK,
-#                                                               self.locators.TOOL_TIP_CONTRARY)
-#         tool_tip_text_section = self.get_text_from_tool_tips(self.locators.SECTION_LINK, self.locators.TOOL_TIP_SECTION)
-#         return tool_tip_text_button, tool_tip_text_field, tool_tip_text_contrary, tool_tip_text_section
-#
-#
+class ToolTipsPage(BasePage):
+    locators = ToolTipsPageLocators()
+
+    # @allure.step('get text from tool tip')
+    def get_text_from_tool_tips(self, hover_elem, wait_elem):
+        element = self.element_is_present(hover_elem)
+        self.action_move_to_element(element)
+        time.sleep(0.3)
+        self.element_is_visible(wait_elem)
+
+        tool_tip_text = self.element_is_visible(self.locators.TOOL_TIPS_INNERS)
+        text = tool_tip_text.text
+        return text
+
+    # @allure.step('check tool tip')
+    def check_tool_tips(self):
+        tool_tip_text_button = self.get_text_from_tool_tips(self.locators.BUTTON, self.locators.TOOL_TIP_BUTTON)
+        tool_tip_text_field = self.get_text_from_tool_tips(self.locators.FIELD, self.locators.TOOL_TIP_FIELD)
+        tool_tip_text_contrary = self.get_text_from_tool_tips(self.locators.CONTRARY_LINK,
+                                                              self.locators.TOOL_TIP_CONTRARY)
+        tool_tip_text_section = self.get_text_from_tool_tips(self.locators.SECTION_LINK, self.locators.TOOL_TIP_SECTION)
+        return tool_tip_text_button, tool_tip_text_field, tool_tip_text_contrary, tool_tip_text_section
+
+
 # class MenuPage(BasePage):
 #     locators = MenuPageLocators()
 #
