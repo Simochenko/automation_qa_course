@@ -3,7 +3,7 @@ import time
 import allure
 
 from pages.widgets_page import AccordianPage, AutoCompletePage, DatePickerPage, \
-    SliderPage, ProgressBarPage, TabsPage, ToolTipsPage, MenuPage
+    SliderPage, ProgressBarPage, TabsPage, ToolTipsPage, MenuPage, SelectMenuPage
 
 
 # @allure.suite('Widgets')
@@ -118,3 +118,28 @@ class TestWidgets:
             data = menu_page.check_menu()
             assert data == ['Main Item 1', 'Main Item 2', 'Sub Item', 'Sub Item', 'SUB SUB LIST »', 'Sub Sub Item 1',
                             'Sub Sub Item 2', 'Main Item 3'], "menu items do not exist or have not been selected"
+
+    # @allure.feature("Select Menu")
+    class TestSelectMenuPage:
+        # @allure.title("Select Menu test")
+        def test_select_menu(self, driver):
+            select_menu_page = SelectMenuPage(driver, 'https://demoqa.com/select-menu')
+            select_menu_page.open()
+
+            select_input_value, select_current_value = select_menu_page.check_select_value()
+            assert select_input_value in select_current_value, "Validating select value field"
+
+            select_one_input_value, select_one_current_value = select_menu_page.check_one_value()
+            assert select_one_input_value in select_one_current_value, "Validating select one value field"
+
+            expected_color, selected_color = select_menu_page.check_old_style_select()
+            assert selected_color == expected_color, "Validating old style select list"
+
+            colors_list, selected_colors_list = select_menu_page.check_multiselect_dropdown()
+            assert selected_colors_list == colors_list, "Validating multiselect dropdown values field"
+
+            items_removed_status = select_menu_page.are_multiselected_items_removed()
+            assert items_removed_status is True, "Validating that items from multiselect dropdown are removed"
+
+            expected_options, selected_options = select_menu_page.check_standart_multiselect()
+            assert selected_options == expected_options, "Validating standard multiselect list"

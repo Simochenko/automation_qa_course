@@ -1,17 +1,36 @@
 import time
 
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage:
     def __init__(self, driver, url):
         self.driver = driver
         self.url = url
+        self.__wait = WebDriverWait(driver, 4, 1, ignored_exceptions=StaleElementReferenceException)
 
     def open(self):
         self.driver.get(self.url)
+
+    def __get_selenium_by(self, find_by: str) -> str:
+        find_by = find_by.lower()
+        locators = {
+            'css': By.CSS_SELECTOR,
+            'xpath': By.XPATH,
+            'id': By.ID,
+            'name': By.NAME,
+            'tag': By.TAG_NAME,
+            'partial_link': By.PARTIAL_LINK_TEXT,
+            'link': By.LINK_TEXT,
+            'class': By.CLASS_NAME
+        }
+        return locators[find_by]
 
     def element_is_visible(self, locator, timeout=5):
         self.go_to_element(self.element_is_present(locator))
@@ -65,3 +84,22 @@ class BasePage:
         action = ActionChains(self.driver)
         action.move_to_element(element)
         action.perform()
+
+    def is_visible(self, find_by: str, locator: str, locator_name=None) -> WebElement:
+        return self.__wait.until(EC.visibility_of_element_located((self.__get_selenium_by(find_by), locator)),
+                                 locator_name)
+
+    def is_present(self, find_by: str, locator: str, locator_name=None) -> WebElement:
+        return self.__wait.until(EC.presence_of_element_located((self.__get_selenium_by(find_by), locator)),
+                                 locator_name)
+
+    def get_text_from_webelements(self, elements: list[WebElement]) -> list[str]:
+        return [element.text.lower() for element in elements]
+
+    def are_visible(self, find_by: str, locator: str, locator_name=None) -> list[WebElement]:
+        return self.__wait.until(EC.visibility_of_all_elements_located((self.__get_selenium_by(find_by), locator)),
+                                 locator_name)
+
+    def are_present(self, find_by: str, locator: str, locator_name=None) -> list[WebElement]:
+        return self.__wait.until(EC.presence_of_all_elements_located((self.__get_selenium_by(find_by), locator)),
+                                 locator_name)
