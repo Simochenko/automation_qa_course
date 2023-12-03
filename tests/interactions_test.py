@@ -1,7 +1,7 @@
 import allure
 
 from pages.interactions_page import SortablePage, \
-    SelectablePage  #, ResizablePage, DroppablePage, DraggablePage
+    SelectablePage, ResizablePage#, DroppablePage, DraggablePage
 
 
 # @allure.suite('Interactions')
@@ -28,18 +28,18 @@ class TestInteractions:
             assert len(item_list) > 0, "no elements were selected"
             assert len(item_grid) > 0, "no elements were selected"
 
-    # # @allure.feature('Resizable Page')
-    # class TestResizablePage:
-    #     # @allure.title('Check changed resizable boxes')
-    #     def test_resizable(self, driver):
-    #         resizable_page = ResizablePage(driver, 'https://demoqa.com/resizable')
-    #         resizable_page.open()
-    #         max_box, min_box = resizable_page.change_size_resizable_box()
-    #         max_resize, min_resize = resizable_page.change_size_resizable()
-    #         assert ('500px', '300px') == max_box, "maximum size not equal to '500px', '300px'"
-    #         assert ('150px', '150px') == min_box, "minimum size not equal to '150px', '150px'"
-    #         assert min_resize != max_resize, "resizable has not been changed"
-    #
+    # @allure.feature('Resizable Page')
+    class TestResizablePage:
+        # @allure.title('Check changed resizable boxes')
+        def test_resizable(self, driver):
+            resizable_page = ResizablePage(driver, 'https://demoqa.com/resizable')
+            resizable_page.open()
+            max_box, min_box = resizable_page.change_size_resizable_box()
+            max_resize, min_resize = resizable_page.change_size_resizable()
+            assert ('500px', '300px') == max_box, "maximum size not equal to '500px', '300px'"
+            assert ('150px', '150px') == min_box, "minimum size not equal to '150px', '150px'"
+            assert min_resize != max_resize, "resizable has not been changed"
+
     # # @allure.feature('Droppable Page')
     # class TestDroppablePage:
     #     # @allure.title('Check simple droppable')
