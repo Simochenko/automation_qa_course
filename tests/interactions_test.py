@@ -1,14 +1,13 @@
 import allure
 
-from pages.interactions_page import SortablePage, \
-    SelectablePage, ResizablePage, DroppablePage, DraggablePage
+from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage, DraggablePage
 
 
-# @allure.suite('Interactions')
+@allure.suite('Interactions')
 class TestInteractions:
-    # @allure.feature('Sortable Page')
+    @allure.feature('Sortable Page')
     class TestSortablePage:
-        # @allure.title('Check changed sortable list and grid')
+        @allure.title('Check changed sortable list and grid')
         def test_sortable(self, driver):
             sortable_page = SortablePage(driver, 'https://demoqa.com/sortable')
             sortable_page.open()
@@ -17,9 +16,9 @@ class TestInteractions:
             assert list_before != list_after, 'the order of the list has not been changed'
             assert grid_before != grid_after, 'the order of the grid has not been changed'
 
-    # @allure.feature('Selectable Page')
+    @allure.feature('Selectable Page')
     class TestSelectablePage:
-        # @allure.title('Check changed selectable list and grid')
+        @allure.title('Check changed selectable list and grid')
         def test_selectable(self, driver):
             selectable_page = SelectablePage(driver, 'https://demoqa.com/selectable')
             selectable_page.open()
@@ -28,9 +27,9 @@ class TestInteractions:
             assert len(item_list) > 0, "no elements were selected"
             assert len(item_grid) > 0, "no elements were selected"
 
-    # @allure.feature('Resizable Page')
+    @allure.feature('Resizable Page')
     class TestResizablePage:
-        # @allure.title('Check changed resizable boxes')
+        @allure.title('Check changed resizable boxes')
         def test_resizable(self, driver):
             resizable_page = ResizablePage(driver, 'https://demoqa.com/resizable')
             resizable_page.open()
@@ -40,16 +39,16 @@ class TestInteractions:
             assert ('150px', '150px') == min_box, "minimum size not equal to '150px', '150px'"
             assert min_resize != max_resize, "resizable has not been changed"
 
-    # @allure.feature('Droppable Page')
+    @allure.feature('Droppable Page')
     class TestDroppablePage:
-        # @allure.title('Check simple droppable')
+        @allure.title('Check simple droppable')
         def test_simple_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
             text = droppable_page.drop_simple()
             assert text == 'Dropped!', "the elements has not been dropped"
 
-        # @allure.title('Check accept droppable')
+        @allure.title('Check accept droppable')
         def test_accept_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
@@ -57,7 +56,7 @@ class TestInteractions:
             assert not_accept == 'Drop here', "the dropped element has been accepted"
             assert accept == 'Dropped!', "the dropped element has not been accepted"
 
-        # @allure.title('Check prevent propogation droppable')
+        @allure.title('Check prevent propogation droppable')
         def test_prevent_propogation_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
@@ -67,7 +66,7 @@ class TestInteractions:
             assert greedy == 'Outer droppable', "the elements texts has been changed"
             assert greedy_inner == 'Dropped!', "the elements texts has not been changed"
 
-        # @allure.title('Check revert draggable droppable')
+        @allure.title('Check revert draggable droppable')
         def test_revert_draggable_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
@@ -76,26 +75,31 @@ class TestInteractions:
             assert will_after_move != will_after_revert, 'the elements has not reverted'
             assert not_will_after_move == not_will_after_revert, 'the elements has  reverted'
 
-    # @allure.feature('Draggable Page')
+    @allure.feature("Draggable")
     class TestDraggablePage:
-        # @allure.title('Check simple draggable')
-        def test_simple_draggable(self, driver):
+        @allure.title("Draggable test")
+        def test_draggable(self, driver):
             draggable_page = DraggablePage(driver, 'https://demoqa.com/dragabble')
             draggable_page.open()
-            before, after = draggable_page.simple_drag_box()
-            assert before != after, "the position of the box has not been changed"
+            X_ONLY_INITIAL_LOC = (851, 407)
+            Y_ONLY_INITIAL_LOC = (569, 407)
+            MAX_BOT_RIGHT_BOX_LOC = (934, 510)
+            MAX_BOT_RIGHT_TEXT_LOC = (441, 711)
+            x_only_loc, y_only_loc = draggable_page.drag_axis_restricted_draggable()
+            assert x_only_loc[0] != X_ONLY_INITIAL_LOC[0] and x_only_loc[1] != X_ONLY_INITIAL_LOC[1], \
+                "Validating x restricted draggable"
+            assert y_only_loc[0] != Y_ONLY_INITIAL_LOC[0] and y_only_loc[1] != Y_ONLY_INITIAL_LOC[1], \
+                "Validating y restricted draggable"
 
-        # @allure.title('Check axis restricted draggable')
-        def test_axis_restricted_draggable(self, driver):
-            draggable_page = DraggablePage(driver, 'https://demoqa.com/dragabble')
-            draggable_page.open()
-            top_x, left_x = draggable_page.axis_restricted_x()
-            top_y, left_y = draggable_page.axis_restricted_y()
-            assert top_x[0][0] == top_x[1][0] and int(
-                top_x[1][0]) == 0, "box position has not changed or there has been a shift in the y-axis"
-            assert left_x[0][0] != left_x[1][0] and int(
-                left_x[1][0]) != 0, "box position has not changed or there has been a shift in the y-axis"
-            assert top_y[0][0] != top_y[1][0] and int(
-                top_y[1][0]) != 0, "box position has not changed or there has been a shift in the x-axis"
-            assert left_y[0][0] == left_y[1][0] and int(
-                left_y[1][0]) == 0, "box position has not changed or there has been a shift in the x-axis"
+            initial_loc, updated_loc = draggable_page.drag_simple_draggable()
+            assert updated_loc != initial_loc, "Validating that box is dragged"
+
+            box_loc, text_loc = draggable_page.drag_restricted_draggable()
+            assert box_loc != MAX_BOT_RIGHT_BOX_LOC, "Validating that box is constrained"
+            assert text_loc != MAX_BOT_RIGHT_TEXT_LOC, "Validating that text is constrained"
+
+            y_axis_deviations = draggable_page.drag_cursor_style_draggable()
+
+            assert y_axis_deviations[0] in range(-10, 0), "Validating that center box has allowed deviation"
+            assert y_axis_deviations[1] in range(0, 60), "Validating that center box has allowed deviation"
+            assert y_axis_deviations[2] in range(-60, 0), "Validating that center box has allowed deviation"

@@ -4,8 +4,8 @@ webdriver-manager~=4.0.1
 Faker~=13.3.4
 requests~=2.31.0
 
-allure-pytest==2.9.45
-allure-python-commons==2.9.45
+allure-pytest==2.13.2
+allure-python-commons==2.13.2
 async-generator==1.10
 atomicwrites==1.4.0
 attrs==21.4.0
